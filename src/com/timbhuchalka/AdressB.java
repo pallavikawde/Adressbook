@@ -59,7 +59,23 @@ class Contact
             if(contacts.get(i).getFirstName().equals(fname)){
                 contacts=contacts.get(i).addAPersonInList(contacts,i);
                 contacts.remove(contact);
-                System.out.println("check");
+                m = 1;
+                break;
+            }
+        }
+        if(m == 0){
+            System.out.println("Contact not found with this name");
+        }
+        return contacts;
+    }
+
+    public ArrayList<Contact> deleteContact(ArrayList<Contact> contacts, String fname){
+        int m = 0;
+        for (Contact contact : contacts) {
+            int i = contacts.indexOf(contact);
+            if(contacts.get(i).getFirstName().equals(fname)){
+                contacts.remove(contact);
+                System.out.println("contact of "+fname+" has been deleted");
                 m = 1;
                 break;
             }
@@ -95,14 +111,20 @@ public class AdressB {
         for(int i= 0;i<numOfPerson;i++){
             contactList = contacts.addAPersonInList(contactList,i);
         }
-
+        System.out.println("*** This is the List *****");
         contacts.showPeopleList(contactList);
 
         System.out.println("Enter first name of Contact which you want to edit");
         Scanner sname =new Scanner(System.in);
         String pname = sname.nextLine();
         contactList = contacts.editContactList(contactList,pname);
-        System.out.println("this is edited list");
+        System.out.println("*****  this is edited list  *****");
+        contacts.showPeopleList(contactList);
+
+        System.out.println("Enter first name of Contact which you want to delete");
+        String dname = sname.nextLine();
+        contactList = contacts.deleteContact(contactList,dname);
+        System.out.println("****  this is edited list after deleting contact  *****");
         contacts.showPeopleList(contactList);
     }
 }
