@@ -99,12 +99,11 @@ class Contact
     }
 }
 
-public class AdressB {
-    public static void main(String[] args) {
-        System.out.println("Welcome");
-        Scanner sc =new Scanner(System.in);
+class AddressBookManager{
+
+    public static ArrayList<Contact> addressBookOperation(ArrayList<Contact> contactList){
         Contact contacts = new Contact();
-        ArrayList<Contact> contactList = new ArrayList<>();
+        Scanner sc =new Scanner(System.in);
 
         System.out.println("enter number of people you want to add");
         int numOfPerson = sc.nextInt();
@@ -126,5 +125,27 @@ public class AdressB {
         contactList = contacts.deleteContact(contactList,dname);
         System.out.println("****  this is edited list after deleting contact  *****");
         contacts.showPeopleList(contactList);
+
+        return contactList;
+    }
+}
+
+public class AdressB {
+    public static void main(String[] args) {
+        System.out.println("Welcome");
+        Contact contacts = new Contact();
+
+        System.out.println("Contact list of Student");
+        ArrayList<Contact> contactListStud = new ArrayList<>();
+        AddressBookManager.addressBookOperation(contactListStud);
+
+        System.out.println("Contact list of Employees");
+        ArrayList<Contact> contactListEmp = new ArrayList<>();
+        AddressBookManager.addressBookOperation(contactListEmp);
+
+        System.out.println("#####  ALL CONTACT-LISTS  #####");
+        contacts.showPeopleList(contactListStud);
+        System.out.println("");
+        contacts.showPeopleList(contactListEmp);
     }
 }
