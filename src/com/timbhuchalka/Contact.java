@@ -1,7 +1,10 @@
 package com.timbhuchalka;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+
+/**
+ Contact Class used to create One Contact
+ */
 public class Contact
 {
         private String firstName;
@@ -32,6 +35,12 @@ public class Contact
         public String getFirstName() {
                 return firstName;
         }
+
+        public String getLastName() { return lastName; }
+
+        public String getCity() { return city; }
+
+        public String getState() { return state; }
 
         @Override
         public String toString() {
