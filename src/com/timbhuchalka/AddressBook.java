@@ -18,14 +18,14 @@ public class AddressBook {
         System.out.println(ANSI_GREEN + " _____________________________________" + ANSI_RESET);
         Scanner sc = new Scanner(System.in);
 
-        Map<String,ArrayList<Contact>> drive = new HashMap<String, ArrayList<Contact>>(10);   //Map Of ArrayList to create A big Drive Of Addressbooks
+        HashMap<String,ArrayList<Contact>> drive = new HashMap<>();   //Map Of ArrayList to create A big Drive Of Addressbooks
 
 
         int maintain = 0;
         while(maintain == 0)
         {
             System.out.println("\nEnter a choice");
-            System.out.println("1.Add a new AddressBook   2.Perform Operation on AddressBook  3.Display all AddressBooks 4.Search people in Particular City/State  5.EXIT");
+            System.out.println("|| 1.Add a new AddressBook   \n|| 2.Perform Operation on AddressBook \n|| 3.Display all AddressBooks \n|| 4.Search people in Particular City/State  \n|| 5.Create Files of all address books  \n|| 6.EXIT");
             int choice = sc.nextInt();
             switch (choice)
             {
@@ -46,7 +46,12 @@ public class AddressBook {
                         System.out.println("Enter Address Book name to Perform Operation On");
                         Scanner sc2 = new Scanner(System.in);
                         String addressBookName2 = sc2.nextLine();
-                        AddressBookOperationsManager.addressBookOperation(drive.get(addressBookName2));
+                        if(drive.containsKey(addressBookName2)) {
+                            AddressBookOperationsManager.addressBookOperation(drive.get(addressBookName2));
+                        }
+                        else {
+                            System.out.println("No such kind of AddressBook Presents");
+                        }
                     }
                     break;
 
@@ -55,7 +60,7 @@ public class AddressBook {
                     System.out.println("\n#####  ALL ADDRESSBOOKS-LISTS  #####");
                     for(String conName : abKeySet){
                         System.out.println("AddressBook :::::: "+conName);
-                        AddressBookOperationsManager.showPeopleList(drive.get(conName));
+                        AddressBookOperations.showPeopleList(drive.get(conName));
                     }
                     break;
 
@@ -71,18 +76,24 @@ public class AddressBook {
                         System.out.println("");
                         for (String conName : abKeySetToSearch) {
                             System.out.println("AddressBook {" + conName + "} With City/State : {" + city + "} :");
-                            AddressBookOperationsManager.searchContactByCityOrState(drive.get(conName), city);
+                            AddressBookOperations.searchContactByCityOrState(drive.get(conName), city);
                             System.out.println("");
                         }
                     }
                     break;
 
                 case 5:
+                    FileIOOperations.createFileOfAddressBook(drive);
+                    break;
+
+                case 6:
                     System.out.println("------>   EXIT   <------");
                     System.out.println(ANSI_RED + "___________________________________________" + ANSI_RESET);
                     System.out.println(ANSI_RED + "*-*-*-*-*       Good Bye!        *-*-*-*-*-*" + ANSI_RESET);
                     maintain = 1;
                     break;
+
+
 
                 default:
                     System.out.println("Invalid Choice");

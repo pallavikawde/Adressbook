@@ -2,198 +2,68 @@ package com.timbhuchalka;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.*;
-import java.util.stream.Stream;
 
 /**
- * Class Holds the methods used to  perform different operation on AddressBook
+ AddressBook Manager Manages Operations
  */
-class AddressBookManager
-{
-    /**
-     * Add person method
+public class AddressBookOperationsManager {
 
-     * @return
-     */
-    public static ArrayList<Contact> addAPersonInList(ArrayList<Contact> contacts)
-    {
-        boolean contactPresent = false;
+
+    public static ArrayList<Contact> addressBookOperation(ArrayList<Contact> contactList){
         Scanner sc =new Scanner(System.in);
-        System.out.println("Enter firstname :");
-        String firstName = sc.nextLine();
-        System.out.println("Enter lastname :");
-        String lastName = sc.nextLine();
-        System.out.println("Enter city :");
-        String city = sc.nextLine();
-        System.out.println("Enter state :");
-        String state = sc.nextLine();
-        System.out.println("Enter phone number :");
-        String pNum = sc.nextLine();
-        System.out.println("Enter emailID :");
-        String email = sc.nextLine();
 
-        // Checking If Contact Present Or Not If Not present then Add new Contact
-        for (Contact contact : contacts){
-            if(contact.getFirstName().equals(firstName) && contact.getLastName().equals(lastName) ){
-                contactPresent = true;
-                System.out.println("Contact already Present add another Contact");
-            }
-        }
-        if(contactPresent == false){
-            contacts.add(new Contact(firstName, lastName, city, state, pNum, email));
-        }
 
-        return contacts;
-    }
+        int maintainOp = 0;
 
-    /**
-     * Show person method
-
-     */
-    public static void showPeopleList(ArrayList<Contact> contacts)
-    {
-        System.out.println("----------------------------------------------------------");
-        for (Contact contact : contacts) {
-            String s = "-- >>" + contact.toString();
-            System.out.println(s);
-        }
-        System.out.println("----------------------------------------------------------");
-    }
-
-    /**
-     * edit person method
-
-     * @return
-     */
-    public static  ArrayList<Contact> editContactList(ArrayList<Contact> contacts, String fname)
-    {
-        int m = 0;
-        for (Contact contact : contacts) {
-            int i = contacts.indexOf(contact);
-            if(contacts.get(i).getFirstName().equals(fname)){
-                boolean contactPresent = false;
-                Scanner sc =new Scanner(System.in);
-                System.out.println("Enter firstname :");
-                String firstName = sc.nextLine();
-                System.out.println("Enter lastname :");
-                String lastName = sc.nextLine();
-                System.out.println("Enter city :");
-                String city = sc.nextLine();
-                System.out.println("Enter state :");
-                String state = sc.nextLine();
-                System.out.println("Enter phone number :");
-                String pNum = sc.nextLine();
-                System.out.println("Enter emailID :");
-                String email = sc.nextLine();
-
-                // Checking If Contact Present Or Not If Not present then Add new Contact
-                contacts.add(i,new Contact(firstName, lastName, city, state, pNum, email));
-                m = 1;
-                break;
-            }
-        }
-        if(m == 0){
-            System.out.println("Contact not found with this name");
-        }
-        return contacts;
-    }
-
-    /**
-     * delete person method
-
-     * @return
-     */
-    public static ArrayList<Contact> deleteContact(ArrayList<Contact> contacts, String fname){
-        int m = 0;
-        for (Contact contact : contacts) {
-            int i = contacts.indexOf(contact);
-            if(contacts.get(i).getFirstName().equals(fname)){
-                contacts.remove(contact);
-                System.out.println("contact of "+fname+" has been deleted");
-                m = 1;
-                break;
-            }
-        }
-        if(m == 0){
-            System.out.println("Contact not found with this name");
-        }
-        return contacts;
-    }
-
-    /**
-     * Search Contact By city or a State and Count
-
-     */
-    public static void searchContactByCityOrState(ArrayList<Contact> contacts, String city){
-        int m = 0;
-        int count = 0;
-        for (Contact contact : contacts) {
-            int i = contacts.indexOf(contact);
-            if(contacts.get(i).getCity().equals(city) || contacts.get(i).getState().equals(city)){
-                System.out.println("Contact with : "+city+" : "+contacts.get(i).toString());
-                m = 1;
-                count++;
-            }
-        }
-        System.out.println(count+" Number Of people Found with City/State : "+city+" in this AddressBook");
-        if(m == 0){
-            System.out.println("Contact not found with this City Or State");
-        }
-    }
-
-    /**
-     * Sort AddressBook By Names
-
-     * @return
-     */
-    public static ArrayList<Contact> sortByName(ArrayList<Contact> contactList) {
-        List<String> names = new ArrayList();
-        for (Contact contact: contactList) {
-            names.add(contact.getFirstName());
-        }
-
-        Stream<String> sortedNames = names.stream().sorted();
-
-        ArrayList<Contact> sortedContactList = new ArrayList<>();
-
-        sortedNames.forEach(name -> {
-            for (Contact contact: contactList) {
-                if(contact.getFirstName().equals(name)) {
-                    sortedContactList.add(contact);
-                    contactList.remove(contact);
+        while (maintainOp == 0) {
+            System.out.println("\n****** Enter the Operation you want perform on AddressBook ******");
+            System.out.println("\n|| 1.Add Contact   \n|| 2.Edit Contact  \n|| 3.Delete Contact  \n|| 4.Print The Contacts  \n|| 5.Sort AddressBook By Name  \n|| 6.Sort AddressBook By City  \n|| 7.Exit from This AddressBook");
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Add a Contact");
+                    contactList = AddressBookOperations.addAPersonInList(contactList);
                     break;
-                }
+
+                case 2:
+                    System.out.println("Enter first name of Contact which you want to edit");
+                    Scanner sname = new Scanner(System.in);
+                    String pname = sname.nextLine();
+                    contactList = AddressBookOperations.editContactList(contactList, pname);
+                    break;
+
+                case 3:
+                    Scanner sdname = new Scanner(System.in);
+                    System.out.println("Enter first name of Contact which you want to delete");
+                    String dname = sdname.nextLine();
+                    contactList = AddressBookOperations.deleteContact(contactList, dname);
+
+                    break;
+
+                case 4:
+                    System.out.println("******** This is the List **********");
+                    AddressBookOperations.showPeopleList(contactList);
+                    break;
+
+                case 5:
+                    contactList = AddressBookOperations.sortByName(contactList);
+                    break;
+
+                case 6:
+                    contactList = AddressBookOperations.sortByCity(contactList);
+                    break;
+
+                case 7:
+                    System.out.println("AddressBook Operation --> EXIT <--");
+                    maintainOp = 1;
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice");
+                    break;
             }
-        });
-        System.out.println("*** AddressBook Sorted Out By Name ***");
-        return sortedContactList;
-    }
-
-    /**
-     * Sort By City
-
-     * @return
-     */
-    public static ArrayList<Contact> sortByCity(ArrayList<Contact> contactList) {
-        List<String> names = new ArrayList();
-        for (Contact contact: contactList) {
-            names.add(contact.getCity());
         }
 
-        Stream<String> sortedNames = names.stream().sorted();
-
-        ArrayList<Contact> sortedContactList = new ArrayList<>();
-
-        sortedNames.forEach(name -> {
-            for (Contact contact: contactList) {
-                if(contact.getCity().equals(name)) {
-                    sortedContactList.add(contact);
-                    contactList.remove(contact);
-                    break;
-                }
-            }
-        });
-        System.out.println("*** AddressBook Sorted Out By City ***");
-        return sortedContactList;
+        return contactList;
     }
 }

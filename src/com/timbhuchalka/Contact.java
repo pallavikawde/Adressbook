@@ -1,7 +1,5 @@
 package com.timbhuchalka;
 
-import java.util.ArrayList;
-
 /**
  Contact Class used to create One Contact
  */
